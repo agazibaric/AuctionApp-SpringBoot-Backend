@@ -12,16 +12,16 @@ import java.util.Map;
 @Repository
 public class AuctionDaoFakeData implements IAuctionDao {
 
-    private static Map<Integer, Item> items;
+    private static Map<Long, Item> items;
 
     static {
-        items = new HashMap<Integer, Item>() {
+        items = new HashMap<Long, Item>() {
             {
-                put(0, new Item(0, "Fender Standard Stratocaster", "1969", 1000f,
+                put(0L, new Item(0L, "Fender Standard Stratocaster", "1969", 1000f,
                         LocalDateTime.now(), Duration.ofDays(2)));
-                put(1, new Item(1, "Gibson Les Paul", "1971", 1200f,
+                put(1L, new Item(1L, "Gibson Les Paul", "1971", 1200f,
                         LocalDateTime.now(), Duration.ofDays(2)));
-                put(2, new Item(2, "Fender Telecaster", "1968", 1100f,
+                put(2L, new Item(2L, "Fender Telecaster", "1968", 1100f,
                         LocalDateTime.now(), Duration.ofDays(2)));
             }
         };
@@ -33,7 +33,7 @@ public class AuctionDaoFakeData implements IAuctionDao {
     }
 
     @Override
-    public Item getItemById(int id) {
+    public Item getItemById(long id) {
         return items.get(id);
     }
 
@@ -43,12 +43,12 @@ public class AuctionDaoFakeData implements IAuctionDao {
     }
 
     @Override
-    public void deleteItemById(int id) {
+    public void deleteItemById(long id) {
         items.remove(id);
     }
 
     @Override
-    public void updateItem(Item item) {
+    public void updateItem(long id, Item item) {
         items.put(item.getId(), item);
     }
 

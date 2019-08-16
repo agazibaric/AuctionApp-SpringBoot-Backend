@@ -19,7 +19,7 @@ public class AuctionService implements IAuctionService {
     }
 
     @Override
-    public Item getItemById(int id) {
+    public Item getItemById(long id) {
         return dao.getItemById(id);
     }
 
@@ -29,13 +29,13 @@ public class AuctionService implements IAuctionService {
     }
 
     @Override
-    public void deleteItemById(int id) {
+    public void deleteItemById(long id) {
         dao.deleteItemById(id);
     }
 
     @Override
-    public void updateItem(Item item) {
-        dao.updateItem(item);
+    public void updateItem(long id, Item item) {
+        dao.updateItem(id, item);
     }
 
 }
