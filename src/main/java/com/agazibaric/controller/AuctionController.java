@@ -3,22 +3,24 @@ package com.agazibaric.controller;
 import com.agazibaric.entity.Item;
 import com.agazibaric.service.IAuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.List;
 
 @RestController
-@RequestMapping(value = "/auction")
+@RequestMapping(value = "/items")
 public class AuctionController {
 
     @Autowired
     private IAuctionService service;
 
     @GetMapping
-    public Collection<Item> getAllItems() {
+    public List<Item> getAllItems() {
         return service.getAllItems();
     }
 
@@ -30,8 +32,6 @@ public class AuctionController {
     @RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public void addItem(Item item) {
-        System.out.println("...........................................");
-        System.out.println(item.getId());
         item.setCreationTime(LocalDateTime.now());
         service.addItem(item);
     }

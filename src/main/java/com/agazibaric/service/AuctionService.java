@@ -1,41 +1,46 @@
 package com.agazibaric.service;
 
-import com.agazibaric.dao.IAuctionDao;
+import com.agazibaric.dao.AuctionDao;
 import com.agazibaric.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuctionService implements IAuctionService {
 
     @Autowired
-    private IAuctionDao dao;
+    private AuctionDao dao;
 
     @Override
-    public Collection<Item> getAllItems() {
-        return dao.getAllItems();
+    public List<Item> getAllItems() {
+        List<Item> items = new ArrayList<>();
+        dao.findAll().forEach(items::add);
+        return items;
     }
 
     @Override
-    public Item getItemById(long id) {
-        return dao.getItemById(id);
+    public Item getItemById(Long id) {
+        Optional<Item> op = dao.findById(id);
+        return op.isPresent() ? op.get() : null;
     }
 
     @Override
     public void addItem(Item item) {
-        dao.addItem(item);
+        dao.save(item);
     }
 
     @Override
-    public void deleteItemById(long id) {
-        dao.deleteItemById(id);
+    public void deleteItemById(Long id) {
+        dao.deleteById(id);
     }
 
     @Override
-    public void updateItem(long id, Item item) {
-        dao.updateItem(id, item);
+    public void updateItem(Long id, Item item) {
+
     }
 
 }

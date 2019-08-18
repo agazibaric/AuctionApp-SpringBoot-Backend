@@ -2,14 +2,14 @@ package com.agazibaric.service;
 
 import com.agazibaric.entity.Item;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface IAuctionService {
 
-    public Collection<Item> getAllItems();
-    public Item getItemById(long id);
+    public List<Item> getAllItems();
+    public Item getItemById(Long id);
     public void addItem(Item item);
-    public void deleteItemById(long id);
-    public void updateItem(long id, Item item);
+    public void deleteItemById(Long id);
+    public void updateItem(Long id, Item item);
 
 }
