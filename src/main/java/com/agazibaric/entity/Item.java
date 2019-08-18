@@ -1,10 +1,7 @@
 package com.agazibaric.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +9,7 @@ import javax.persistence.Id;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -21,6 +17,7 @@ import java.time.LocalDateTime;
 public class Item {
 
     @Id
+    @GeneratedValue
     private Long id;
     private String name;
     private String description;
@@ -28,4 +25,11 @@ public class Item {
     private LocalDateTime creationTime;
     private Duration duration;
 
+    public Item(String name, String description, float price, LocalDateTime creationTime, Duration duration) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.creationTime = creationTime;
+        this.duration = duration;
+    }
 }

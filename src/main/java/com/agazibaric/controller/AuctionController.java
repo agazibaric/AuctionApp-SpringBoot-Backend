@@ -29,9 +29,9 @@ public class AuctionController {
         return service.getItemById(id);
     }
 
-    @RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @RequestMapping(method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addItem(Item item) {
+    public void addItem(@RequestBody Item item) {
         item.setCreationTime(LocalDateTime.now());
         service.addItem(item);
     }
