@@ -1,7 +1,8 @@
+/*
 package com.agazibaric;
 
 import com.agazibaric.dao.AuctionDao;
-import com.agazibaric.entity.Item;
+import com.agazibaric.item.Item;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -22,4 +23,4 @@ class LoadDatabase {
       log.info("Preloading " + repository.save(new Item("Guitar3", "Fender", 1000f, LocalDateTime.now(), Duration.ofHours(2L))));
     };
   }
-}
+}*/
