@@ -1,15 +1,13 @@
 package com.agazibaric.item;
 
+import com.agazibaric.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.boot.convert.DurationFormat;
 import org.springframework.boot.convert.DurationStyle;
-import org.springframework.boot.convert.DurationUnit;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -35,5 +33,8 @@ public class Item {
     private LocalDateTime creationTime;
     @DurationFormat(value = DurationStyle.SIMPLE)
     private Duration duration;
+    @ManyToOne
+    @JoinColumn
+    private User user;
 
 }

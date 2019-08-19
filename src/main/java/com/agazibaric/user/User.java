@@ -1,18 +1,19 @@
-package com.agazibaric.entity;
+package com.agazibaric.user;
 
 import com.agazibaric.item.Item;
 import lombok.*;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(exclude = "items")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class User implements Serializable {
 
     @Id
@@ -22,6 +23,7 @@ public class User implements Serializable {
     private String username;
     @NotNull
     private String password;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Item> items;
 
 }
