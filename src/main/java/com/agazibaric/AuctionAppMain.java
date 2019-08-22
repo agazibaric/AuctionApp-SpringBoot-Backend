@@ -52,9 +52,27 @@ public class AuctionAppMain {
                     .duration(Duration.ofDays(2))
                     .build();
 
+            Item i3 = Item.builder()
+                    .name("Fender Telecaster")
+                    .description("1968")
+                    .price(1000f)
+                    .creationTime(LocalDateTime.now())
+                    .duration(Duration.ofDays(2))
+                    .build();
+
+            Item i4 = Item.builder()
+                    .name("Fender Telecaster")
+                    .description("1968")
+                    .price(1000f)
+                    .creationTime(LocalDateTime.now())
+                    .duration(Duration.ofDays(2))
+                    .build();
+
             List<Item> items = new ArrayList<>();
             items.add(i1);
             items.add(i2);
+            items.add(i3);
+            items.add(i4);
 
             User user = User.builder().items(items).username("Nick").password("Pass").build();
             items.forEach(i -> i.setUser(user));
