@@ -6,4 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RepositoryRestResource(path = "items", collectionResourceRel = "items")
 public interface ItemRepo extends PagingAndSortingRepository<Item, Long> {
+
+    
 }

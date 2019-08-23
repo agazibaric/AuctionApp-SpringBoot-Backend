@@ -12,6 +12,8 @@ public class ItemEventHandler {
     @HandleBeforeCreate
     public void handleAuthorBeforeCreate(Item item){
         item.setCreationTime(LocalDateTime.now());
+        item.setNumberOfBids(0);
+        item.setHighestBidder(null);
     }
 
 }

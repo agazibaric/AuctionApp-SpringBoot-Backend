@@ -40,14 +40,14 @@ public class AuctionAppMain {
             Item i1 = Item.builder()
                     .name("Fender Stratocaster")
                     .description("1968")
-                    .price(1000f)
+                    .minimumPrice(1000f)
                     .creationTime(LocalDateTime.now())
                     .duration(Duration.ofDays(2))
                     .build();
             Item i2 = Item.builder()
                     .name("Fender Telecaster")
                     .description("1968")
-                    .price(1000f)
+                    .minimumPrice(1000f)
                     .creationTime(LocalDateTime.now())
                     .duration(Duration.ofDays(2))
                     .build();
@@ -55,7 +55,7 @@ public class AuctionAppMain {
             Item i3 = Item.builder()
                     .name("Fender Telecaster")
                     .description("1968")
-                    .price(1000f)
+                    .minimumPrice(1000f)
                     .creationTime(LocalDateTime.now())
                     .duration(Duration.ofDays(2))
                     .build();
@@ -63,7 +63,7 @@ public class AuctionAppMain {
             Item i4 = Item.builder()
                     .name("Fender Telecaster")
                     .description("1968")
-                    .price(1000f)
+                    .minimumPrice(1000f)
                     .creationTime(LocalDateTime.now())
                     .duration(Duration.ofDays(2))
                     .build();

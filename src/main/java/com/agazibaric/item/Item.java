@@ -10,6 +10,7 @@ import org.springframework.boot.convert.DurationFormat;
 import org.springframework.boot.convert.DurationStyle;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Duration;
@@ -31,7 +32,11 @@ public class Item {
     @NotNull
     private String description;
     @NotNull
-    private Float price;
+    private Float minimumPrice;
+    @NotNull
+    private Float bidPrice;
+    @NotNull
+    private Integer numberOfBids;
     @DateTimeFormat
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonFormat(pattern="dd/MM/yyyy hh:mm")
@@ -41,5 +46,8 @@ public class Item {
     @ManyToOne
     @JoinColumn
     private User user;
+    @ManyToOne
+    @JoinColumn
+    private User highestBidder;
 
 }

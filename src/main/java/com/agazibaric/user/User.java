@@ -25,5 +25,7 @@ public class User implements Serializable {
     private String password;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Item> items;
+    @OneToMany(mappedBy = "highestBidder", cascade = CascadeType.ALL)
+    private List<Item> bids;
 
 }
