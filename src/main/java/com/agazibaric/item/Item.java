@@ -44,10 +44,13 @@ public class Item {
     @DurationFormat(value = DurationStyle.SIMPLE)
     private Duration duration;
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(nullable = false)
     private User user;
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(nullable = true)
     private User highestBidder;
+    @ManyToOne
+    @JoinColumn(nullable = true)
+    private User winner;
 
 }

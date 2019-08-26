@@ -9,7 +9,10 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -25,7 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 @SpringBootApplication
-public class AuctionAppMain {
+public class AuctionAppMain extends SpringBootServletInitializer {
 
     @Autowired
     private ItemRepo itemRepo;
@@ -33,14 +36,21 @@ public class AuctionAppMain {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Component
     class DataSetup implements ApplicationRunner {
+
+
         @Override
         public void run(ApplicationArguments args) throws Exception {
             Item i1 = Item.builder()
                     .name("Fender Stratocaster")
                     .description("1968")
                     .minimumPrice(1000f)
+                    .bidPrice(0.0f)
+                    .numberOfBids(0)
                     .creationTime(LocalDateTime.now())
                     .duration(Duration.ofDays(2))
                     .build();
@@ -48,6 +58,8 @@ public class AuctionAppMain {
                     .name("Fender Telecaster")
                     .description("1968")
                     .minimumPrice(1000f)
+                    .bidPrice(0.0f)
+                    .numberOfBids(0)
                     .creationTime(LocalDateTime.now())
                     .duration(Duration.ofDays(2))
                     .build();
@@ -56,6 +68,8 @@ public class AuctionAppMain {
                     .name("Fender Telecaster")
                     .description("1968")
                     .minimumPrice(1000f)
+                    .bidPrice(0.0f)
+                    .numberOfBids(0)
                     .creationTime(LocalDateTime.now())
                     .duration(Duration.ofDays(2))
                     .build();
@@ -64,6 +78,8 @@ public class AuctionAppMain {
                     .name("Fender Telecaster")
                     .description("1968")
                     .minimumPrice(1000f)
+                    .bidPrice(0.0f)
+                    .numberOfBids(0)
                     .creationTime(LocalDateTime.now())
                     .duration(Duration.ofDays(2))
                     .build();
@@ -74,12 +90,24 @@ public class AuctionAppMain {
             items.add(i3);
             items.add(i4);
 
-            User user = User.builder().items(items).username("Nick").password("Pass").build();
+            User user = User.builder()
+                    .items(items)
+                    .bids(new ArrayList<>())
+                    .itemsWon(new ArrayList<>())
+                    .username("nick")
+                    .password(bCryptPasswordEncoder.encode("pass"))
+                    .build();
             items.forEach(i -> i.setUser(user));
             userRepo.save(user);
 
         }
     }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(AuctionAppMain.class);
+    }
+
 
     public static void main(String[] args) {
         SpringApplication.run(AuctionAppMain.class, args);

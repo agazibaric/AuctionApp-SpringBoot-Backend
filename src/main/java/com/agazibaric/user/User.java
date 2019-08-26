@@ -20,6 +20,7 @@ public class User implements Serializable {
     @GeneratedValue
     private Long id;
     @NotNull
+    @Column(unique = true)
     private String username;
     @NotNull
     private String password;
@@ -27,5 +28,7 @@ public class User implements Serializable {
     private List<Item> items;
     @OneToMany(mappedBy = "highestBidder", cascade = CascadeType.ALL)
     private List<Item> bids;
+    @OneToMany(mappedBy = "highestBidder", cascade = CascadeType.ALL)
+    private List<Item> itemsWon;
 
 }
