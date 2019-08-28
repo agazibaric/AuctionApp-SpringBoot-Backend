@@ -32,7 +32,11 @@ public class SecurityServiceImpl implements ISecurityService {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
-        authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        try {
+            authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (usernamePasswordAuthenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);

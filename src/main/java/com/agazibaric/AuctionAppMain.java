@@ -42,7 +42,6 @@ public class AuctionAppMain extends SpringBootServletInitializer {
     @Component
     class DataSetup implements ApplicationRunner {
 
-
         @Override
         public void run(ApplicationArguments args) throws Exception {
             Item i1 = Item.builder()
@@ -90,14 +89,19 @@ public class AuctionAppMain extends SpringBootServletInitializer {
             items.add(i3);
             items.add(i4);
 
+            List<Item> bids = new ArrayList<>();
+            bids.add(i1);
+
             User user = User.builder()
                     .items(items)
-                    .bids(new ArrayList<>())
+                    .bids(bids)
                     .itemsWon(new ArrayList<>())
                     .username("nick")
                     .password(bCryptPasswordEncoder.encode("pass"))
                     .build();
+
             items.forEach(i -> i.setUser(user));
+            bids.forEach(b -> b.setHighestBidder(user));
             userRepo.save(user);
 
         }

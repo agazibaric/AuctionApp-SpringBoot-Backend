@@ -1,6 +1,9 @@
 package com.agazibaric.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.Base64;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 
 @RestController
@@ -25,50 +29,30 @@ public class AuthController {
     @Autowired
     private UserValidator userValidator;
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") User userForm,
-                               BindingResult bindingResult, Model model) {
-        //userValidator.validate(userForm, bindingResult);
-        System.out.println("STIGLI..................................................................");
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @PostMapping("/registration")
+    public ResponseEntity<BindingResult> registration(@RequestBody User userForm, BindingResult bindingResult) {
+        userValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult);
         }
 
+        String plainPw = userForm.getPassword();
+        String hashedPw = passwordEncoder.encode(plainPw);
+        userForm.setPassword(hashedPw);
         userRepo.save(userForm);
-        securityService.autoLogin(userForm.getUsername(), userForm.getPassword());
-        return "redirect:/welcome";
+        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @RequestMapping("/token")
-    @CrossOrigin(origins="*", maxAge=3600)
-    public Map<String,String> token(HttpSession session) {
-        return Collections.singletonMap("token", session.getId());
-    }
-
-    /*
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model, String error, String logout) {
-        if (error != null)
-            model.addAttribute("error", "Your username and password is invalid.");
-
-        if (logout != null)
-            model.addAttribute("message", "You have been logged out successfully.");
-
-        return "login";
-    }*/
-
-    @RequestMapping("/user")
-    @CrossOrigin(origins="*", maxAge=3600)
-    public Principal user(Principal user) {
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public User currentUserName(Principal principal) {
+        User user = userRepo.findByUsername(principal.getName());
+        System.out.println(principal.getName());
         return user;
-    }
-
-    @RequestMapping("/user2")
-    public Principal user(HttpServletRequest request) {
-        String authToken = request.getHeader("Authorization")
-                .substring("Basic".length()).trim();
-        return () ->  new String(Base64.getDecoder()
-                .decode(authToken)).split(":")[0];
     }
 
 }
