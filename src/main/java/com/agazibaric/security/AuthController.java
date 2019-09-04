@@ -1,20 +1,16 @@
-package com.agazibaric.user;
+package com.agazibaric.security;
 
+import com.agazibaric.user.User;
+import com.agazibaric.user.UserRepo;
+import com.agazibaric.user.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/")
@@ -34,6 +30,7 @@ public class AuthController {
 
     @PostMapping("/registration")
     public ResponseEntity<BindingResult> registration(@RequestBody User userForm, BindingResult bindingResult) {
+        System.out.println(userForm);
         userValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult);

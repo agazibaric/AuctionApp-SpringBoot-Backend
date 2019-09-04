@@ -1,4 +1,4 @@
-package com.agazibaric.user;
+package com.agazibaric.security;
 
 public interface ISecurityService {
 
