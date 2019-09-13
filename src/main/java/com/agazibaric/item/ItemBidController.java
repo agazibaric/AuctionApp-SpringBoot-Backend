@@ -4,10 +4,11 @@ import com.agazibaric.user.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/bid")
+@RequestMapping("/")
 public class ItemBidController {
 
     @Autowired
@@ -16,8 +17,11 @@ public class ItemBidController {
     @Autowired
     private UserRepo userRepo;
 
-    @GetMapping
-    public void makeABid(@RequestParam(name = "itemId") Long itemId, @RequestParam(name = "bid") Float bid) {
+    @RequestMapping(value = "/bid", method = RequestMethod.GET)
+    public void makeABid(@RequestParam(value = "itemId") Long itemId,
+                         @RequestParam(value = "bid") Float bid, Principal principal) {
+
+
         if (itemId == null || bid == null || bid <= 0.0f) return;
 
         Optional<Item> op = itemRepo.findById(itemId);
@@ -27,7 +31,9 @@ public class ItemBidController {
         Float currentBid = item.getBidPrice();
         if (currentBid == null || currentBid < bid) {
             item.setBidPrice(bid);
-            //item.setHighestBidder(signedInUser);
+            item.setHighestBidder(userRepo.findByUsername(principal.getName()));
+            item.setNumberOfBids(item.getNumberOfBids() + 1);
+            itemRepo.save(item);
         }
     }
 

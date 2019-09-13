@@ -17,11 +17,7 @@ public class UserEventHandler {
      
     @HandleBeforeCreate
     public void handleAuthorBeforeCreate(User user){
-        // set encrypted password?
-        System.out.println("USEREVENTHANLER PW: " + user.getPassword());
-        System.out.println("............................................................................................");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        System.out.println("USEREVENTHANLER ENCPW: " + user.getPassword());
         user.setBids(new ArrayList<>());
         user.setItems(new ArrayList<>());
         user.setItemsWon(new ArrayList<>());
