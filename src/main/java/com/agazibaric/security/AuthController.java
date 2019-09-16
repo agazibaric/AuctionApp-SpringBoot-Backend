@@ -28,9 +28,8 @@ public class AuthController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @PostMapping("/registration")
-    public ResponseEntity<BindingResult> registration(@RequestBody User userForm, BindingResult bindingResult) {
-        System.out.println(userForm);
+    @RequestMapping(value = "/registration", method = RequestMethod.POST, consumes = "multipart/form-data")
+    public ResponseEntity<Object> registration(@ModelAttribute User userForm, BindingResult bindingResult) {
         userValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult);

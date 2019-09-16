@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -33,6 +34,9 @@ public class User implements Serializable {
 
     @Transient
     private String passwordConfirm;
+
+    @Email(message = "Email should be valid")
+    private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = { "user", "highestBidder", "winner"})

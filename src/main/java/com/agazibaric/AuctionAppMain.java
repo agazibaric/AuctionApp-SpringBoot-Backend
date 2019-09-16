@@ -90,6 +90,7 @@ public class AuctionAppMain extends SpringBootServletInitializer {
                     .itemsWon(new ArrayList<>())
                     .username("nick")
                     .password(bCryptPasswordEncoder.encode("pass"))
+                    .email("ante1506@gmail.com")
                     .build();
 
             items.forEach(i -> i.setUser(user));
