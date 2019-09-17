@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login", "/registration", "/logout", "/items").permitAll()
+                .antMatchers("/login", "/registration", "/logout", "/items/search/findByIsExpiredFalse").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
                 .loginPage("/login").permitAll()

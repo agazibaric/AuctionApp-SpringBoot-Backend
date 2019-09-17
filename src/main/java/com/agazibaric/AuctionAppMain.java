@@ -44,6 +44,7 @@ public class AuctionAppMain extends SpringBootServletInitializer {
                     .numberOfBids(0)
                     .creationTime(LocalDateTime.now())
                     .duration(Duration.ofHours(12))
+                    .isExpired(false)
                     .build();
             Item i2 = Item.builder()
                     .name("Fender Telecaster")
@@ -53,6 +54,7 @@ public class AuctionAppMain extends SpringBootServletInitializer {
                     .numberOfBids(0)
                     .creationTime(LocalDateTime.now())
                     .duration(Duration.ofDays(3))
+                    .isExpired(false)
                     .build();
 
             Item i3 = Item.builder()
@@ -63,6 +65,7 @@ public class AuctionAppMain extends SpringBootServletInitializer {
                     .numberOfBids(0)
                     .creationTime(LocalDateTime.now())
                     .duration(Duration.ofDays(1))
+                    .isExpired(false)
                     .build();
 
             Item i4 = Item.builder()
@@ -72,7 +75,8 @@ public class AuctionAppMain extends SpringBootServletInitializer {
                     .bidPrice(0.0f)
                     .numberOfBids(0)
                     .creationTime(LocalDateTime.now())
-                    .duration(Duration.ofSeconds(60))
+                    .duration(Duration.ofSeconds(20))
+                    .isExpired(false)
                     .build();
 
             List<Item> items = new ArrayList<>();

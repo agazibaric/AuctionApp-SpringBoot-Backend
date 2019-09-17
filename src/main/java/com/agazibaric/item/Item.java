@@ -9,6 +9,7 @@ import lombok.*;
 import org.springframework.boot.convert.DurationFormat;
 import org.springframework.boot.convert.DurationStyle;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Nullable;
 import javax.persistence.*;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
+@Transactional
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Item {
 
@@ -54,6 +56,9 @@ public class Item {
 
     @DurationFormat(value = DurationStyle.SIMPLE)
     private Duration duration;
+
+    @NotNull
+    private Boolean isExpired;
 
     @ManyToOne
     @JoinColumn(nullable = false)

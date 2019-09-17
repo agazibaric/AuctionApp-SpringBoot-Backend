@@ -3,6 +3,7 @@ package com.agazibaric.user;
 import com.agazibaric.item.Item;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -17,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Transactional
 public class User implements Serializable {
 
     @Id

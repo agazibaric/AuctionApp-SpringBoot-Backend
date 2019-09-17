@@ -25,6 +25,7 @@ public class ItemEventHandler {
         item.setBidPrice(0f);
         item.setHighestBidder(null);
         item.setWinner(null);
+        item.setIsExpired(false);
     }
 
 }
