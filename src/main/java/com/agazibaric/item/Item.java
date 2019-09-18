@@ -23,7 +23,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Transactional
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Item {
 

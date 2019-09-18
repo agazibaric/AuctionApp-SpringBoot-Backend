@@ -75,7 +75,7 @@ public class AuctionAppMain extends SpringBootServletInitializer {
                     .bidPrice(0.0f)
                     .numberOfBids(0)
                     .creationTime(LocalDateTime.now())
-                    .duration(Duration.ofSeconds(20))
+                    .duration(Duration.ofSeconds(10))
                     .isExpired(false)
                     .build();
 

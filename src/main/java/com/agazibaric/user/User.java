@@ -18,7 +18,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Transactional
 public class User implements Serializable {
 
     @Id
@@ -40,7 +39,7 @@ public class User implements Serializable {
     @Email(message = "Email should be valid")
     private String email;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = { "user", "highestBidder", "winner"})
     private List<Item> items;
 
