@@ -1,5 +1,6 @@
 package com.agazibaric;
 
+import com.agazibaric.item.ImageService;
 import com.agazibaric.item.Item;
 import com.agazibaric.item.ItemRepo;
 import com.agazibaric.user.User;
@@ -31,11 +32,25 @@ public class AuctionAppMain extends SpringBootServletInitializer {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private ImageService imageService;
+
     @Component
     class DataSetup implements ApplicationRunner {
 
         @Override
         public void run(ApplicationArguments args) throws Exception {
+            imageService.init();
+
+            List<String> img1 = new ArrayList<>();
+            List<String> img2 = new ArrayList<>();
+            List<String> img3 = new ArrayList<>();
+            List<String> img4 = new ArrayList<>();
+            img1.add("strat.jpg");
+            img2.add("telly1.png");
+            img3.add("telly2.jpg");
+            img4.add("classic.jpg");
+
             Item i1 = Item.builder()
                     .name("Fender Stratocaster")
                     .description("1968")
@@ -45,7 +60,9 @@ public class AuctionAppMain extends SpringBootServletInitializer {
                     .creationTime(LocalDateTime.now())
                     .duration(Duration.ofHours(12))
                     .isExpired(false)
+                    .images(img1)
                     .build();
+
             Item i2 = Item.builder()
                     .name("Fender Telecaster")
                     .description("1968")
@@ -55,6 +72,7 @@ public class AuctionAppMain extends SpringBootServletInitializer {
                     .creationTime(LocalDateTime.now())
                     .duration(Duration.ofDays(3))
                     .isExpired(false)
+                    .images(img2)
                     .build();
 
             Item i3 = Item.builder()
@@ -66,17 +84,19 @@ public class AuctionAppMain extends SpringBootServletInitializer {
                     .creationTime(LocalDateTime.now())
                     .duration(Duration.ofDays(1))
                     .isExpired(false)
+                    .images(img3)
                     .build();
 
             Item i4 = Item.builder()
-                    .name("Fender Telecaster")
+                    .name("Classical guitar")
                     .description("1968")
                     .minimumPrice(1000f)
                     .bidPrice(0.0f)
                     .numberOfBids(0)
                     .creationTime(LocalDateTime.now())
-                    .duration(Duration.ofSeconds(10))
+                    .duration(Duration.ofSeconds(60))
                     .isExpired(false)
+                    .images(img4)
                     .build();
 
             List<Item> items = new ArrayList<>();

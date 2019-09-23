@@ -15,8 +15,10 @@ import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.nio.file.Path;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -73,5 +75,8 @@ public class Item {
     @JoinColumn(nullable = true)
     @JsonIgnoreProperties("itemsWon")
     private User winner;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    private List<String> images;
 
 }

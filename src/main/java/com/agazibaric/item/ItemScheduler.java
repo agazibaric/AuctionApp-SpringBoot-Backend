@@ -13,20 +13,16 @@ public class ItemScheduler {
     @Autowired
     private ItemRepo itemRepo;
 
-    @Scheduled(fixedDelay = 4000, initialDelay = 4000)
+    @Scheduled(fixedDelayString = "${expiration.check.rate}", initialDelayString = "${expiration.check.rate}")
     public void checkItemExpiration() {
         for (Item item : itemRepo.findByIsExpiredFalse()) {
-            if (isItemExpired(item)) {
+            if (ItemUtil.isItemExpired(item)) {
                 System.out.println("Item expired: " + item.getName());
                 item.setWinner(item.getHighestBidder());
                 item.setIsExpired(true);
                 itemRepo.save(item);
             }
         }
-    }
-
-    private boolean isItemExpired(Item item) {
-        return item.getCreationTime().plus(item.getDuration()).isBefore(LocalDateTime.now());
     }
 
 }

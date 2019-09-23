@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Component
 @RepositoryEventHandler
@@ -26,6 +27,7 @@ public class ItemEventHandler {
         item.setHighestBidder(null);
         item.setWinner(null);
         item.setIsExpired(false);
+        item.setImages(new ArrayList<>());
     }
 
 }
