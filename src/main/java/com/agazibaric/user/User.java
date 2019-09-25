@@ -13,7 +13,6 @@ import java.io.Serializable;
 import java.util.List;
 
 @Data
-@EqualsAndHashCode(exclude = {"items", "bids", "itemsWon"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -50,5 +49,14 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "winner", cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = { "user", "highestBidder", "winner"})
     private List<Item> itemsWon;
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (o == null) return false;
+        if (!(o instanceof User)) return false;
+        User u = (User) o;
+        return u.getUsername().equals(this.username);
+    }
 
 }

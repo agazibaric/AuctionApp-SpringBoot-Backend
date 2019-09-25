@@ -28,7 +28,7 @@ public class ImageServiceImpl implements ImageService {
     @Value("${item.image.root.dir}")
     private String ROOT_DIR;
 
-    private static final Path IMAGE_DIR = Paths.get("images/item/");
+    private static final Path IMAGE_DIR = Paths.get("./src/main/resources/images/item/");
 
     @Override
     public void saveImageFile(Long itemId, MultipartFile file) {

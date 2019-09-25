@@ -33,7 +33,7 @@ public class ItemUtil {
     }
 
     public static String getFullImageName(Item item, String fileName) {
-        return String.format("%s-%s", item.getName(), fileName);
+        return String.format("%s-%d-%s", item.getName(), item.getId(), fileName);
     }
 
 }

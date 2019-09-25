@@ -1,5 +1,6 @@
 package com.agazibaric.item;
 
+import com.agazibaric.user.User;
 import com.agazibaric.user.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -55,13 +56,17 @@ public class ItemBidController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bid is made on nonexisting item.");
 
         Item item = op.get();
-        Float currentBid = item.getBidPrice();
+        User loggedInUser = userRepo.findByUsername(principal.getName());
+        if (item.getUser().equals(loggedInUser))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User can not bid on his item.");
+
         if (ItemUtil.isItemExpired(item))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Item time has expired.");
 
+        Float currentBid = item.getBidPrice();
         if (currentBid == null || currentBid < bid) {
             item.setBidPrice(bid);
-            item.setHighestBidder(userRepo.findByUsername(principal.getName()));
+            item.setHighestBidder(loggedInUser);
             item.setNumberOfBids(item.getNumberOfBids() + 1);
             itemRepo.save(item);
             return ResponseEntity.status(HttpStatus.OK).build();
