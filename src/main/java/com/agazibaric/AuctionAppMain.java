@@ -61,13 +61,13 @@ public class AuctionAppMain extends SpringBootServletInitializer {
 
 
             Item i1 = createItem("Fender Stratocaster", "1968", 1000f, Duration.ofHours(12), img1);
-            Item i2 = createItem("Fender Telecaster", "1969", 1000f, Duration.ofHours(12), img2);
-            Item i3 = createItem("Classical guitar", "For beginners", 1000f, Duration.ofHours(12), img3);
-            Item i4 = createItem("Projector", "Mini projector", 1000f, Duration.ofHours(12), img4);
-            Item i5 = createItem("Basketball", "Size: 5", 1000f, Duration.ofHours(12), img5);
+            Item i2 = createItem("Fender Telecaster", "1969", 1000f, Duration.ofHours(8), img2);
+            Item i3 = createItem("Classical guitar", "For beginners", 1000f, Duration.ofDays(2), img3);
+            Item i4 = createItem("Projector", "Mini projector", 1000f, Duration.ofMinutes(5), img4);
+            Item i5 = createItem("Basketball", "Size: 5", 1000f, Duration.ofHours(24), img5);
             Item i6 = createItem("Xiaomi Redmi Note 7", "New", 1000f, Duration.ofHours(12), img6);
-            Item i7 = createItem("Logitech g400", "Gaming mouse", 1000f, Duration.ofHours(12), img7);
-            Item i8 = createItem("Fender Telecaster", "1970", 1000f, Duration.ofHours(12), img8);
+            Item i7 = createItem("Logitech g400", "Gaming mouse", 1000f, Duration.ofDays(4), img7);
+            Item i8 = createItem("Fender Telecaster", "1970", 1000f, Duration.ofMinutes(1), img8);
 
 
             List<Item> items1 = new ArrayList<>();
