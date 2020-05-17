@@ -24,6 +24,7 @@ public class ItemEventHandler {
         item.setCreationTime(LocalDateTime.now());
         item.setNumberOfBids(0);
         item.setBidPrice(0f);
+        item.setHighestBidderPrice(0f);
         item.setHighestBidder(null);
         item.setWinner(null);
         item.setIsExpired(false);

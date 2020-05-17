@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,6 +26,21 @@ public class ItemBidController {
 
     @Autowired
     private ImageService imageService;
+
+    @GetMapping("/items/main")
+    public ResponseEntity<List<Item>> getHomePageItems(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.ok()
+                    .body(itemRepo.findByIsExpiredFalse());
+        } else {
+            User loggedInUser = userRepo.findByUsername(principal.getName());
+            if (loggedInUser == null)
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+            return ResponseEntity.ok()
+                    .body(itemRepo.findByisExpiredFalseAndUser(loggedInUser));
+        }
+    }
 
     @PostMapping("items/{id}/image")
     public void handleImagePost(@PathVariable String id, @RequestParam("imagefile") MultipartFile file){
@@ -57,16 +73,37 @@ public class ItemBidController {
 
         Item item = op.get();
         User loggedInUser = userRepo.findByUsername(principal.getName());
+        if (loggedInUser == null)
+            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You have to be signed in.");
         if (item.getUser().equals(loggedInUser))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User can not bid on his item.");
 
         if (ItemUtil.isItemExpired(item))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Item time has expired.");
 
-        Float currentBid = item.getBidPrice();
-        if (currentBid == null || currentBid < bid) {
+        Float bidPrice = item.getBidPrice();
+        Float highestBidderPrice = item.getHighestBidderPrice();
+        User highestBidder = item.getHighestBidder();
+
+        if (highestBidderPrice < bid) {
+            String message = "";
+            if (highestBidder != null && highestBidder.equals(loggedInUser)) {
+                // just set new highest bidder price
+                item.setHighestBidderPrice(bid);
+                message = "You set new highest bid price: " + bid + "$";
+            } else {
+                // set new highest bidder price
+                item.setHighestBidderPrice(bid);
+                // bidPrice is now previous highest bidder price
+                item.setBidPrice(highestBidderPrice);
+                item.setHighestBidder(loggedInUser);
+                item.setNumberOfBids(item.getNumberOfBids() + 1);
+                message = "You are now the highest bidder with price " + highestBidderPrice + "$";
+            }
+            itemRepo.save(item);
+            return ResponseEntity.status(HttpStatus.OK).body(message);
+        } else if (bidPrice < bid && !highestBidder.equals(loggedInUser)) {
             item.setBidPrice(bid);
-            item.setHighestBidder(loggedInUser);
             item.setNumberOfBids(item.getNumberOfBids() + 1);
             itemRepo.save(item);
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -76,6 +113,5 @@ public class ItemBidController {
                 .status(HttpStatus.BAD_REQUEST)
                 .body("Bid amount has to be greater then current bid amount which is " + item.getBidPrice());
     }
-
 
 }

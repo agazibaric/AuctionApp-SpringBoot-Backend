@@ -20,6 +20,19 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Item class represents an auction item on which users can bid on.
+ * User can not bid on his items.
+ * If the user is a highest bidder on an item,
+ * <code>highestBidderPrice</code> is set to the bid amount that the user set.
+ * <code>highestBidderPrice</code> is not visible to the other users,
+ * only the <code>bidPrice</code> is shown to all users and is set to zero at the beginning.
+ * By bidding, other users increase <code>bidPrice</code> hoping that their bid price
+ * will exceed <code>highestBidderPrice</code>. By exceeding that price
+ * the user become current highest bidder and
+ * the <code>highestBidderPrice</code> is set to the user's bid price.
+ * After that, <code>bidPrice</code> is set to the previous <code>highestBidderPrice</code>.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -46,6 +59,9 @@ public class Item {
 
     @NotNull
     private Float bidPrice;
+
+    @NotNull
+    private Float highestBidderPrice;
 
     @NotNull
     private Integer numberOfBids;
